@@ -1,3 +1,4 @@
+// Textformatierung im Editor
 function formatText(command) {
     if (command === 'H1') {
         document.execCommand('formatBlock', false, '<h1>');
@@ -14,13 +15,25 @@ function formatText(command) {
     }
 }
 
+// Standardmäßig <p> statt <div> bei Enter-Taste
+document.getElementById('editor').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+        // Verhindere das Standardverhalten
+        e.preventDefault();
+        
+        // Füge ein neues <p>-Tag an der aktuellen Cursor-Position ein
+        document.execCommand('insertParagraph');
+    }
+});
+
+// Exportfunktion für den Textinhalt als XML
 function exportText() {
     // Den Inhalt des Editors abrufen
     var editorContent = document.getElementById('editor').innerHTML;
 
     // XML-Dokument erstellen
     var xmlContent = '<?xml version="1.0" encoding="UTF-8"?>\n';
-    xmlContent += '<document>\n';
+    xmlContent += '<document xml:lang="de">\n';
     xmlContent += '<content>\n';
     xmlContent += editorContent + '\n';
     xmlContent += '</content>\n';
