@@ -26,16 +26,25 @@ document.getElementById('editor').addEventListener('keydown', function(e) {
     }
 });
 
+// Funktion zum Ersetzen von <div> durch <p>
+function replaceDivWithP(content) {
+    // Ersetze alle <div> mit <p>
+    return content.replace(/<div/g, '<p').replace(/<\/div>/g, '</p>');
+}
+
 // Exportfunktion für den Textinhalt als XML
 function exportText() {
     // Den Inhalt des Editors abrufen
     var editorContent = document.getElementById('editor').innerHTML;
 
+    // Ersetze <div>-Tags durch <p>-Tags
+    var formattedContent = replaceDivWithP(editorContent);
+
     // XML-Dokument erstellen
     var xmlContent = '<?xml version="1.0" encoding="UTF-8"?>\n';
     xmlContent += '<document xml:lang="de">\n';
     xmlContent += '<content>\n';
-    xmlContent += editorContent + '\n';
+    xmlContent += formattedContent + '\n';
     xmlContent += '</content>\n';
     xmlContent += '</document>';
 
