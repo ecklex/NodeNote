@@ -1,23 +1,39 @@
 function formatText(command) {
     if (command === 'H1') {
         document.execCommand('formatBlock', false, '<h1>');
-    } if (command === 'H2') {
+    } else if (command === 'H2') {
         document.execCommand('formatBlock', false, '<h2>');
-    } if (command === 'H3') {
+    } else if (command === 'H3') {
         document.execCommand('formatBlock', false, '<h3>');
-    } if (command === 'H4') {
+    } else if (command === 'H4') {
         document.execCommand('formatBlock', false, '<h4>');
-    } if (command === 'H5') {
+    } else if (command === 'H5') {
         document.execCommand('formatBlock', false, '<h5>');
     } else {
         document.execCommand(command, false, null);
     }
-// save function to save the content of the editor into the same directory as xml file
-function save() {
-    var editor = document.getElementById('editor');
-    var text = editor.innerHTML;
-    var title = document.getElementById('title').value;
-    var blob = new Blob([text], { type: "text/plain;charset=utf-8" });
-    save(blob, title + ".xml");
 }
+
+function exportText() {
+    // Den Inhalt des Editors abrufen
+    var editorContent = document.getElementById('editor').innerHTML;
+
+    // XML-Dokument erstellen
+    var xmlContent = '<?xml version="1.0" encoding="UTF-8"?>\n';
+    xmlContent += '<document>\n';
+    xmlContent += '<content>\n';
+    xmlContent += editorContent + '\n';
+    xmlContent += '</content>\n';
+    xmlContent += '</document>';
+
+    // Blob erstellen (repräsentiert die Datei)
+    var blob = new Blob([xmlContent], { type: 'text/xml' });
+
+    // Download-Link erstellen
+    var link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = 'editor-content.xml';
+
+    // Automatisch den Download-Link klicken, um den Download zu starten
+    link.click();
 }
