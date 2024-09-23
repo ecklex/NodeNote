@@ -1,5 +1,5 @@
 // Textformatierung im Editor
-function formatText(command) {
+function formatText(command, value = null) {
     if (command === 'H1') {
         document.execCommand('formatBlock', false, '<h1>');
     } else if (command === 'H2') {
@@ -10,8 +10,10 @@ function formatText(command) {
         document.execCommand('formatBlock', false, '<h4>');
     } else if (command === 'H5') {
         document.execCommand('formatBlock', false, '<h5>');
+    } else if (command === 'formatBlock' && value === 'blockquote') {
+        document.execCommand('formatBlock', false, 'blockquote');
     } else {
-        document.execCommand(command, false, null);
+        document.execCommand(command, false, value);
     }
 }
 
